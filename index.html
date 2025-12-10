@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>SDT-HBM: Smart Digital Twin Platform for High-Rise Building Management in Dubai</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Simple modern styling using pure CSS -->
+    <style>
+        :root {
+            --bg: #0b1020;
+            --bg-alt: #12182a;
+            --accent: #00c9a7;
+            --accent-soft: rgba(0, 201, 167, 0.12);
+            --text: #f5f7ff;
+            --muted: #a5afc6;
+            --card: #181f35;
+            --border: #252c45;
+            --shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
+            --radius-lg: 18px;
+            --radius-xl: 24px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: var(--text);
+            background: radial-gradient(circle at top left, #1a2647 0, #050814 55%, #02030a 100%);
+            min-height: 100vh;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .page {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 16px 64px;
+        }
+
+        header {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .logo-cluster {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .logo-card {
+            background: rgba(0,0,0,0.25);
+            border-radius: 999px;
+            padding: 6px 14px;
+            border: 1px solid rgba(255,255,255,0.06);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo-card img {
+            height: 28px;
+            width: auto;
+            display: block;
+            border-radius: 6px;
+        }
+        .logo-card span {
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+            gap: 32px;
+            align-items: stretch;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        .hero-main {
+            background: linear-gradient(135deg, rgba(0, 201, 167, 0.12), rgba(60, 120, 255, 0.12));
+            border-radius: var(--radius-xl);
+            padding: 28px 26px;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: var(--shadow);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+        .badge-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: #37ecba;
+            box-shadow: 0 0 0 6px rgba(55, 236, 186, 0.22);
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 3vw, 2.3rem);
+            margin: 0 0 8px;
+            letter-spacing: 0.01em;
+        }
+        .hero-subtitle {
+            color: var(--muted);
+            font-size: 0.95rem;
+            max-width: 540px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+        .meta-item {
+            padding: 8px 10px;
+            border-radius: 10px;
+            background: rgba(0,0,0,0.45);
+            border: 1px solid rgba(255,255,255,0.06);
+            font-size: 0.78rem;
+            color: var(--muted);
+        }
+        .meta-label {
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            color: #7be9cf;
+        }
+
+        .funding-card {
+            background: rgba(0,0,0,0.45);
+            border-radius: 14px;
+            padding: 12px 14px;
+            border: 1px solid rgba(255,255,255,0.08);
+            margin-top: 8px;
+        }
+        .funding-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #7be9cf;
+            margin-bottom: 4px;
+        }
+        .funding-text {
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        .hero-side {
+            border-radius: var(--radius-xl);
+            background: radial-gradient(circle at top, rgba(0, 201, 167, 0.18), transparent 55%),
+                        linear-gradient(160deg, var(--bg-alt), #060814);
+            padding: 22px 20px 20px;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: var(--shadow);
+        }
+
+        .side-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .pill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+        .pill {
+            font-size: 0.78rem;
+            padding: 6px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(0,0,0,0.5);
+            color: var(--muted);
+        }
+        .objectives-list,
+        .impact-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.82rem;
+            color: var(--muted);
+        }
+        .objectives-list li,
+        .impact-list li {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            margin-bottom: 6px;
+        }
+        .objectives-list li::before,
+        .impact-list li::before {
+            content: "•";
+            color: var(--accent);
+            margin-top: 1px;
+        }
+
+        .sections {
+            display: grid;
+            grid-template-columns: minmax(0, 2.4fr) minmax(0, 3fr);
+            gap: 28px;
+        }
+        @media (max-width: 960px) {
+            .sections {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        section {
+            background: var(--bg-alt);
+            border-radius: var(--radius-lg);
+            padding: 20px 18px;
+            border: 1px solid var(--border);
+        }
+
+        section h2 {
+            font-size: 1.05rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        section p {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .researchers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            margin-top: 10px;
+        }
+        .researcher-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 12px 12px 14px;
+            border: 1px solid rgba(255,255,255,0.07);
+        }
+        .researcher-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .researcher-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 999px;
+            background: radial-gradient(circle at 30% 0, #fff, #7be9cf 40%, #10172f 75%);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .researcher-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .researcher-name {
+            font-size: 0.94rem;
+            font-weight: 600;
+        }
+        .researcher-role {
+            font-size: 0.78rem;
+            color: #9fc0ff;
+        }
+        .researcher-bio {
+            font-size: 0.8rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .pub-list {
+            margin: 8px 0 0;
+            padding: 0;
+            list-style: none;
+        }
+        .pub-item {
+            padding: 10px 10px 9px;
+            border-radius: 12px;
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,0.07);
+            margin-bottom: 8px;
+        }
+        .pub-title {
+            font-size: 0.9rem;
+            margin-bottom: 3px;
+        }
+        .pub-meta {
+            font-size: 0.78rem;
+            color: var(--muted);
+        }
+        .pub-status {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #f7d88c;
+        }
+
+        footer {
+            margin-top: 32px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            font-size: 0.78rem;
+            color: var(--muted);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <header>
+        <div>
+            <div class="badge">
+                <span class="badge-dot"></span>
+                <span>Smart Digital Twin for High-Rise Buildings · Dubai</span>
+            </div>
+            <h1>SDT-HBM: Smart Digital Twin Platform for High-Rise Building Management in Dubai</h1>
+            <p class="hero-subtitle">
+                An AI-driven digital twin platform that fuses IoT data, BIM models, and advanced analytics
+                to monitor, predict, and optimize the performance of high-rise buildings across Dubai.
+            </p>
+        </div>
+
+        <div class="logo-cluster">
+            <!-- Put your logo images in /assets/img/ and update the src paths -->
+            <div class="logo-card">
+                <img src="assets/img/ud_logo.jpg" alt="University of Dubai logo" />
+                <span>University of Dubai</span>
+            </div>
+            <div class="logo-card">
+                <img src="assets/img/u_sharjah_logo.jpg" alt="University of Sharjah logo" />
+                <span>University of Sharjah</span>
+            </div>
+            <div class="logo-card">
+                <img src="assets/img/qatar_university_logo.jpg" alt="Qatar University logo" />
+                <span>Qatar University</span>
+            </div>
+            <div class="logo-card">
+                <img src="assets/img/macquarie_logo.jpg" alt="Macquarie University logo" />
+                <span>Macquarie University</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="hero">
+            <!-- LEFT: project summary + funding -->
+            <div class="hero-main">
+                <div class="hero-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Program</div>
+                        Dubai Research and Development (RDI) Program
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Project Code</div>
+                        2024DUNIV-MOH-001
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Duration</div>
+                        2025 – 2028
+                    </div>
+                </div>
+
+                <p class="hero-subtitle">
+                    The SDT-HBM project (Smart Digital Twin for High-Rise Building Management) aims to build an
+                    AI-driven platform that fuses IoT data, Building Information Models (BIM), and advanced analytics
+                    to create a living, virtual replica of high-rise buildings in Dubai. This digital twin mirrors
+                    energy use, indoor environmental quality, equipment health, and occupant comfort, enabling a shift
+                    from reactive control to proactive, data-driven decision-making.
+                </p>
+                <p class="hero-subtitle">
+                    At the core of the platform are machine learning and deep learning models for short-term energy
+                    forecasting, anomaly detection, and joint comfort–energy prediction. These models provide calibrated
+                    uncertainty estimates, identify abnormal operation and potential faults, and quantify the trade-offs
+                    between energy savings and occupant comfort.
+                </p>
+                <p class="hero-subtitle">
+                    In its full deployment, SDT-HBM will connect to real-time IoT and BMS data, visualize performance in
+                    3D BIM environments, and support predictive maintenance and control strategies aligned with Dubai’s
+                    Net Zero 2050 goals — forming a scalable blueprint for AI-enabled digital twins across districts and cities.
+                </p>
+
+                <div class="funding-card">
+                    <div class="funding-title">Funding & Strategic Focus</div>
+                    <div class="funding-text">
+                        Sponsored by <strong>Dubai Future Foundation</strong> under the Dubai RDI Program, focusing on
+                        <em>Smart Built Infrastructure</em>, <em>Cognitive Cities</em>, and <em>Net Zero 2050</em>.
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: objectives / impact -->
+            <div class="hero-side">
+                <div class="side-title">Core Objectives</div>
+                <ul class="objectives-list">
+                    <li>Real-time monitoring of high-rise building energy, comfort, and environmental quality.</li>
+                    <li>AI-driven predictive maintenance and anomaly detection.</li>
+                    <li>Joint energy–comfort optimization aligned with Net Zero 2050.</li>
+                    <li>Scalable digital twin integration using BIM and IoT.</li>
+                    <li>Deployment-ready platform for Dubai’s high-rise infrastructure.</li>
+                </ul>
+
+                <div style="height: 14px;"></div>
+
+                <div class="side-title">Expected Impact</div>
+                <ul class="impact-list">
+                    <li>Reduce building operational energy consumption by up to 25%.</li>
+                    <li>Increase comfort compliance in occupied zones.</li>
+                    <li>Enable proactive fault detection before equipment failure.</li>
+                    <li>Support data-driven smart city planning and governance.</li>
+                    <li>Position Dubai as a global leader in urban digital twin technologies.</li>
+                </ul>
+
+                <div style="height: 16px;"></div>
+                <div class="side-title">Technical Focus</div>
+                <div class="pill-list">
+                    <span class="pill">Digital Twin for High-Rise Buildings</span>
+                    <span class="pill">Short-Term Energy Forecasting</span>
+                    <span class="pill">Supervised Anomaly Detection</span>
+                    <span class="pill">Multimodal Comfort–Energy Modeling</span>
+                    <span class="pill">Uncertainty Quantification</span>
+                    <span class="pill">BIM & IoT Integration</span>
+                    <span class="pill">Net Zero 2050</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sections">
+            <!-- LEFT COLUMN -->
+            <section>
+                <h2>Research Team</h2>
+                <p>
+                    SDT-HBM is led by a multidisciplinary team spanning smart buildings, AI, cybersecurity,
+                    structural engineering, and urban sustainability.
+                </p>
+
+                <div class="researchers-grid">
+                    <!-- Each researcher card – images are optional -->
+                    <div class="researcher-card">
+                        <div class="researcher-header">
+                            <div class="researcher-avatar">
+                                <!-- Optional: <img src="assets/img/shadi_atalla.jpg" alt="Dr. Shadi Atalla" /> -->
+                            </div>
+                            <div>
+                                <div class="researcher-name">Dr. Shadi Atalla</div>
+                                <div class="researcher-role">Principal Investigator</div>
+                            </div>
+                        </div>
+                        <div class="researcher-bio">
+                            Professor at University of Dubai, leading research on smart buildings, digital twins, and energy analytics.
+                        </div>
+                    </div>
+
+                    <div class="researcher-card">
+                        <div class="researcher-header">
+                            <div class="researcher-avatar">
+                                <!-- <img src="assets/img/murad_almadani.jpg" alt="Dr. Murad Almadani" /> -->
+                            </div>
+                            <div>
+                                <div class="researcher-name">Dr. Murad Almadani</div>
+                                <div class="researcher-role">Postdoctoral Researcher / AI Lead</div>
+                            </div>
+                        </div>
+                        <div class="researcher-bio">
+                            Postdoctoral researcher focusing on AI-driven digital twins, uncertainty-aware forecasting, and multimodal comfort–energy modeling.
+                        </div>
+                    </div>
+
+                    <div class="researcher-card">
+                        <div class="researcher-header">
+                            <div class="researcher-avatar"></div>
+                            <div>
+                                <div class="researcher-name">Dr. Yassine Himeur</div>
+                                <div class="researcher-role">Co-Investigator</div>
+                            </div>
+                        </div>
+                        <div class="researcher-bio">
+                            Associate Professor at University of Dubai and expert in smart grids, energy efficiency, and AI for sustainable built environments.
+                        </div>
+                    </div>
+
+                    <div class="researcher-card">
+                        <div class="researcher-header">
+                            <div class="researcher-avatar"></div>
+                            <div>
+                                <div class="researcher-name">Prof. Wathiq Mansoor</div>
+                                <div class="researcher-role">Co-Investigator</div>
+                            </div>
+                        </div>
+                        <div class="researcher-bio">
+                            Professor at University of Dubai with expertise in smart cities, networking, and digital transformation.
+                        </div>
+                    </div>
+
+                    <div class="researcher-card">
+                        <div class="researcher-header">
+                            <div class="researcher-avatar"></div>
+                            <div>
+                                <div class="researcher-name">Prof. Abbes Amira</div>
+                                <div class="researcher-role">Co-Investigator</div>
+                            </div>
+                        </div>
+                        <div class="researcher-bio">
+                            Specialist in high-performance computing, AI accelerators, and intelligent systems.
+                        </div>
+                    </div>
+
+                    <div class="researcher-card">
+                        <div class="researcher-header">
+                            <div class="researcher-avatar"></div>
+                            <div>
+                                <div class="researcher-name">Prof. Huseyin Seker</div>
+                                <div class="researcher-role">Co-Investigator</div>
+                            </div>
+                        </div>
+                        <div class="researcher-bio">
+                            Expert in AI, complex systems, and data-driven modeling, with extensive work on digital twins and intelligent cyber–physical systems.
+                        </div>
+                    </div>
+
+                    <div class="researcher-card">
+                        <div class="researcher-header">
+                            <div class="researcher-avatar"></div>
+                            <div>
+                                <div class="researcher-name">Prof. Fatih Kurugollu</div>
+                                <div class="researcher-role">Co-Investigator</div>
+                            </div>
+                        </div>
+                        <div class="researcher-bio">
+                            Specialist in cybersecurity, digital forensics, and secure intelligent systems, focusing on trustworthy AI and cyber-resilience.
+                        </div>
+                    </div>
+
+                    <div class="researcher-card">
+                        <div class="researcher-header">
+                            <div class="researcher-avatar"></div>
+                            <div>
+                                <div class="researcher-name">Dr. Amel Ibrahim Al-Ali</div>
+                                <div class="researcher-role">Co-Investigator</div>
+                            </div>
+                        </div>
+                        <div class="researcher-bio">
+                            Researcher in intelligent embedded systems, IoT architectures, and smart sensing technologies for smart cities and high-rise monitoring.
+                        </div>
+                    </div>
+
+                    <div class="researcher-card">
+                        <div class="researcher-header">
+                            <div class="researcher-avatar"></div>
+                            <div>
+                                <div class="researcher-name">Prof. Emad Mushtaha</div>
+                                <div class="researcher-role">Co-Investigator</div>
+                            </div>
+                        </div>
+                        <div class="researcher-bio">
+                            Civil and structural engineering expert specializing in smart infrastructure and structural health monitoring for large-scale built environments.
+                        </div>
+                    </div>
+
+                    <div class="researcher-card">
+                        <div class="researcher-header">
+                            <div class="researcher-avatar"></div>
+                            <div>
+                                <div class="researcher-name">Dr. Fodil Fadli</div>
+                                <div class="researcher-role">Co-Investigator</div>
+                            </div>
+                        </div>
+                        <div class="researcher-bio">
+                            Researcher in sustainable architecture, urban informatics, and data-driven decision-making for resilient high-rise developments.
+                        </div>
+                    </div>
+
+                    <div class="researcher-card">
+                        <div class="researcher-header">
+                            <div class="researcher-avatar"></div>
+                            <div>
+                                <div class="researcher-name">Prof. Amin Beheshti</div>
+                                <div class="researcher-role">Co-Investigator</div>
+                            </div>
+                        </div>
+                        <div class="researcher-bio">
+                            Expert in big data analytics and scalable machine learning, focusing on real-time data platforms for advanced digital twin applications.
+                        </div>
+                    </div>
+
+                    <div class="researcher-card">
+                        <div class="researcher-header">
+                            <div class="researcher-avatar"></div>
+                            <div>
+                                <div class="researcher-name">Prof. Amjad Gawanmeh</div>
+                                <div class="researcher-role">Co-Investigator</div>
+                            </div>
+                        </div>
+                        <div class="researcher-bio">
+                            Specialist in real-time systems, embedded intelligence, and industrial IoT, supporting the reliability of large-scale smart building platforms.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RIGHT COLUMN -->
+            <section>
+                <h2>Related Publications (AI Core of SDT-HBM)</h2>
+                <p>
+                    The AI components of SDT-HBM build on ongoing research in uncertainty-aware forecasting,
+                    anomaly detection, and multimodal comfort–energy modeling:
+                </p>
+                <ul class="pub-list">
+                    <li class="pub-item">
+                        <div class="pub-title">
+                            Uncertainty-Aware Gradient Boosting for Smart Building Energy Forecasting
+                        </div>
+                        <div class="pub-meta">
+                            <strong>Authors:</strong> M. Almadani et al.<br />
+                            <strong>Venue:</strong> Conference paper (energy forecasting / LEAD-1.0)<br />
+                            <span class="pub-status">Status: Submitted · 2025</span>
+                        </div>
+                    </li>
+                    <li class="pub-item">
+                        <div class="pub-title">
+                            Context-Aware Transformer for Supervised Anomaly Detection in Smart Building Energy Consumption
+                        </div>
+                        <div class="pub-meta">
+                            <strong>Authors:</strong> M. Almadani et al.<br />
+                            <strong>Venue:</strong> Conference paper (anomaly detection / LEAD-1.0)<br />
+                            <span class="pub-status">Status: Submitted · 2025</span>
+                        </div>
+                    </li>
+                    <li class="pub-item">
+                        <div class="pub-title">
+                            Multimodal Foundation Model for Smart Buildings: Joint Prediction of Comfort and Energy Savings
+                        </div>
+                        <div class="pub-meta">
+                            <strong>Authors:</strong> M. Almadani et al.<br />
+                            <strong>Venue:</strong> Journal manuscript<br />
+                            <span class="pub-status">Status: Submitted · 2025</span>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div>
+            © SDT-HBM Project · 2025–2028 · Smart Digital Twin Platform for High-Rise Building Management in Dubai
+        </div>
+        <div>
+            Part of the Dubai RDI Program · Sponsored by Dubai Future Foundation
+        </div>
+    </footer>
+</div>
+</body>
+</html>
