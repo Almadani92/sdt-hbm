@@ -18,9 +18,7 @@
       --radius-xl: 20px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -29,13 +27,8 @@
       background: linear-gradient(180deg, #f7f9ff 0%, #eef3ff 40%, #f5f7fb 100%);
     }
 
-    a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
     /* HERO HEADER */
     header {
@@ -46,7 +39,6 @@
       position: relative;
       overflow: hidden;
     }
-
     header::after {
       content: "";
       position: absolute;
@@ -68,15 +60,17 @@
       align-items: center;
       position: relative;
       z-index: 1;
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     @media (max-width: 900px) {
-      header {
-        padding: 24px 18px 30px;
-      }
-      .hero-inner {
-        grid-template-columns: minmax(0, 1fr);
-      }
+      header { padding: 24px 18px 30px; }
+      .hero-inner { grid-template-columns: minmax(0, 1fr); }
     }
 
     .hero-title {
@@ -122,35 +116,7 @@
     .hero-meta {
       font-size: 0.88rem;
       color: #d0dcff;
-      margin-bottom: 18px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 12px 22px;
-      background: #7df0d1;
-      color: #003366;
-      text-decoration: none;
-      border-radius: 999px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
-      border: none;
-      cursor: pointer;
-      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
-    }
-    .btn:hover {
-      background: #6be0c2;
-      transform: translateY(-1px);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
-      text-decoration: none;
-    }
-
-    .btn span.icon {
-      font-size: 1.1rem;
+      margin-bottom: 0;
     }
 
     .hero-side-card {
@@ -230,9 +196,7 @@
       line-height: 1.6;
     }
 
-    .muted {
-      color: var(--text-muted);
-    }
+    .muted { color: var(--text-muted); }
 
     /* INSTITUTIONS */
     .institutions {
@@ -252,6 +216,11 @@
       flex-direction: column;
       align-items: center;
       width: 230px;
+      transition: all 0.15s ease;
+    }
+    .institution-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(20, 40, 90, 0.12);
     }
     .institution-card img {
       height: 70px;
@@ -265,16 +234,9 @@
       text-align: center;
     }
 
-    /* OBJECTIVES & IMPACT LISTS */
-    ul {
-      padding-left: 18px;
-      margin: 8px 0 0;
-    }
-    li {
-      margin-bottom: 6px;
-      font-size: 0.92rem;
-      color: var(--text-main);
-    }
+    /* LISTS */
+    ul { padding-left: 18px; margin: 8px 0 0; }
+    li { margin-bottom: 6px; font-size: 0.92rem; color: var(--text-main); }
 
     /* GRID LAYOUT FOR TEAM & PUBLICATIONS */
     .flex-grid {
@@ -283,9 +245,7 @@
       gap: 20px;
     }
     @media (max-width: 900px) {
-      .flex-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
+      .flex-grid { grid-template-columns: minmax(0, 1fr); }
     }
 
     /* RESEARCH TEAM CARDS */
@@ -305,11 +265,11 @@
       grid-template-columns: auto minmax(0, 1fr);
       gap: 10px;
       align-items: center;
+      transition: box-shadow 0.15s ease, transform 0.15s ease;
     }
     .researcher-card:hover {
       box-shadow: 0 8px 20px rgba(30, 45, 90, 0.12);
       transform: translateY(-1px);
-      transition: box-shadow 0.15s ease, transform 0.15s ease;
     }
     .researcher-card img {
       width: 72px;
@@ -318,9 +278,7 @@
       object-fit: cover;
       border: 2px solid #e0ebff;
     }
-    .researcher-info strong {
-      font-size: 0.95rem;
-    }
+    .researcher-info strong { font-size: 0.95rem; }
     .researcher-role {
       font-size: 0.78rem;
       color: var(--accent);
@@ -334,12 +292,40 @@
       line-height: 1.5;
     }
 
-    /* PUBLICATIONS */
-    .publications-list {
-      margin: 6px 0 0;
-      padding: 0;
-      list-style: none;
+    /* CO-RESEARCHERS */
+    .co-researchers {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
     }
+    .co-researcher-card {
+      background: #f9fbff;
+      border-radius: 12px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 12px rgba(30, 45, 90, 0.06);
+    }
+    .co-researcher-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+    .co-researcher-role {
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .co-researcher-email a {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+    .co-researcher-email a:hover { text-decoration: underline; }
+
+    /* PUBLICATIONS */
+    .publications-list { margin: 6px 0 0; padding: 0; list-style: none; }
     .pub-item {
       background: #fbfcff;
       border-radius: 12px;
@@ -348,21 +334,19 @@
       box-shadow: 0 3px 10px rgba(25, 40, 80, 0.06);
       margin-bottom: 8px;
     }
-    .pub-title {
-      font-size: 0.94rem;
-      font-weight: 600;
-      margin-bottom: 2px;
-    }
-    .pub-meta {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-    }
+    .pub-title { font-size: 0.94rem; font-weight: 600; margin-bottom: 2px; }
+    .pub-meta { font-size: 0.82rem; color: var(--text-muted); }
     .pub-status {
-      font-size: 0.76rem;
+      font-size: 0.72rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: #06c100;
+      color: #ffffff;
+      background: #06c100;
+      padding: 3px 8px;
+      border-radius: 999px;
+      display: inline-block;
       font-weight: 600;
+      margin-top: 6px;
     }
 
     /* FOOTER */
@@ -437,9 +421,9 @@
       At the core of the platform are machine learning and deep learning models for short-term energy
       forecasting, anomaly detection, and joint comfort–energy prediction. These models provide calibrated
       uncertainty estimates, identify abnormal operation and potential faults, and quantify the trade-offs
-      between energy savings and occupant comfort. The offline app associated with this project showcases
+      between energy savings and occupant comfort. The application associated with this project showcases
       this AI core by analyzing historical or simulated building data and generating actionable insights
-      that would later be fed into the live digital twin.
+      that can be integrated into the live digital twin.
     </p>
     <p>
       In its full deployment, SDT-HBM will integrate real-time data from IoT sensors and BMS systems,
@@ -476,7 +460,7 @@
     </div>
   </div>
 
-  <!-- OBJECTIVES & IMPACT in two columns -->
+  <!-- OBJECTIVES & IMPACT -->
   <div class="section">
     <div class="flex-grid">
       <div>
@@ -509,6 +493,7 @@
 
   <!-- TEAM & PUBLICATIONS GRID -->
   <div class="flex-grid">
+
     <!-- RESEARCH TEAM -->
     <div class="section">
       <div class="section-header">
@@ -521,9 +506,9 @@
       <div class="researcher-grid">
 
         <div class="researcher-card">
-          <img src="assets/img/shadi_atalla.jpg" alt="Prof. Shadi Atalla">
+          <img src="assets/img/shadi_atalla.jpg" alt="Dr. Shadi Atalla">
           <div class="researcher-info">
-            <strong>Prof. Shadi Atalla</strong>
+            <strong>Dr. Shadi Atalla</strong>
             <div class="researcher-role">Principal Investigator</div>
             <p class="researcher-bio">
               Professor at University of Dubai, leading research on smart buildings, digital twins, and energy analytics.
@@ -653,6 +638,33 @@
         </div>
 
       </div>
+
+      <!-- CO-RESEARCHERS (new subsection under Research Team) -->
+      <div class="section-header" style="margin-top: 20px;">
+        <h2>Co-Researchers</h2>
+        <p class="section-subtitle muted">
+          Supporting researchers contributing to the SDT-HBM project.
+        </p>
+      </div>
+
+      <div class="co-researchers">
+        <div class="co-researcher-card">
+          <div class="co-researcher-name">Eng. Haitham Hani Moh’d Abu Damis</div>
+          <div class="co-researcher-role">Co-Researcher</div>
+          <div class="co-researcher-email">
+            <a href="mailto:hadamis@ud.ac.ae">hadamis@ud.ac.ae</a>
+          </div>
+        </div>
+
+        <div class="co-researcher-card">
+          <div class="co-researcher-name">Dr. Adel Oulefki</div>
+          <div class="co-researcher-role">Co-Researcher</div>
+          <div class="co-researcher-email">
+            <a href="mailto:aoulefki@ud.ac.ae">aoulefki@ud.ac.ae</a>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!-- PUBLICATIONS -->
@@ -666,35 +678,23 @@
 
       <ul class="publications-list">
         <li class="pub-item">
-          <div class="pub-title">
-            Uncertainty-Aware Gradient Boosting for Smart Building Energy Forecasting
-          </div>
-          <div class="pub-meta">
-            M. Almadani et al. ICSPIS 2025 The 8th International Conference on Signal Processing & Information Security 18-20th November 2025, Dubai, United Arab Emirates.
-
-          </div>
-          <div class="pub-status">Status: Accepted</div>
+          <div class="pub-title">Uncertainty-Aware Gradient Boosting for Smart Building Energy Forecasting</div>
+          <div class="pub-meta">M. Almadani et al. · Conference paper (energy forecasting / LEAD-1.0) · 2025</div>
+          <div class="pub-status">Accepted</div>
         </li>
         <li class="pub-item">
-          <div class="pub-title">
-            Context-Aware Transformer for Supervised Anomaly Detection in Smart Building Energy Consumption
-          </div>
-          <div class="pub-meta">
-            M. Almadani et al. IEEE 44th International Conference on Consumer Electronics
-          </div>
-          <div class="pub-status">Status: Accepted</div>
+          <div class="pub-title">Context-Aware Transformer for Supervised Anomaly Detection in Smart Building Energy Consumption</div>
+          <div class="pub-meta">M. Almadani et al. · Conference paper (anomaly detection / LEAD-1.0) · 2025</div>
+          <div class="pub-status">Accepted</div>
         </li>
         <li class="pub-item">
-          <div class="pub-title">
-            A Multimodal Transformer for Joint Prediction of Comfort and Energy Consumption in Smart Buildings
-          </div>
-          <div class="pub-meta">
-            M. Almadani et al. · Artificial Intelligence and Smart Energy issue in Energies
-          </div>
-          <div class="pub-status">Status: Accepted in 20 Dec 2025</div>
+          <div class="pub-title">Multimodal Foundation Model for Smart Buildings: Joint Prediction of Comfort and Energy Savings</div>
+          <div class="pub-meta">M. Almadani et al. · Journal manuscript · 2025</div>
+          <div class="pub-status">Accepted</div>
         </li>
       </ul>
     </div>
+
   </div>
 
 </div>
@@ -705,9 +705,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
