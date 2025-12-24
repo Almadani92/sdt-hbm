@@ -299,30 +299,32 @@
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 12px;
     }
-    .co-researcher-card {
-      background: #f9fbff;
-      border-radius: 12px;
-      padding: 14px 16px;
-      border: 1px solid var(--border);
-      box-shadow: 0 4px 12px rgba(30, 45, 90, 0.06);
+
+    .co-researcher-card{
+      background:#fbfcff;
+      border-radius:12px;
+      padding:12px 12px 14px;
+      border:1px solid var(--border);
+      box-shadow:0 4px 12px rgba(30,45,90,0.06);
+      display:grid;
+      grid-template-columns:auto minmax(0,1fr);
+      gap:10px;
+      align-items:center;
+      transition: box-shadow 0.15s ease, transform 0.15s ease;
     }
-    .co-researcher-name {
-      font-weight: 600;
-      font-size: 0.95rem;
-      margin-bottom: 4px;
+
+    .co-researcher-card:hover{
+      box-shadow:0 8px 20px rgba(30,45,90,0.12);
+      transform: translateY(-1px);
     }
-    .co-researcher-role {
-      font-size: 0.8rem;
-      color: var(--accent);
-      font-weight: 600;
-      margin-bottom: 4px;
+
+    .co-researcher-photo{
+      width:72px;
+      height:72px;
+      border-radius:50%;
+      object-fit:cover;
+      border:2px solid #e0ebff;
     }
-    .co-researcher-email a {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      text-decoration: none;
-    }
-    .co-researcher-email a:hover { text-decoration: underline; }
 
     /* PUBLICATIONS */
     .publications-list { margin: 6px 0 0; padding: 0; list-style: none; }
@@ -646,23 +648,26 @@
           Supporting researchers contributing to the SDT-HBM project.
         </p>
       </div>
-      
-        <div class="co-researchers">
-          <img src="assets/img/haitham.jpg" alt="Eng. Haitham Abu Damis">
+
+      <div class="co-researchers">
+
+        <div class="co-researcher-card">
+          <img class="co-researcher-photo" src="assets/img/haitham.jpg" alt="Eng. Haitham Abu Damis">
           <div class="researcher-info">
             <strong>Eng. Haitham Abu Damis</strong>
-            <div class="researcher-role">Technical Engineer </div>
+            <div class="researcher-role">Technical Engineer</div>
           </div>
         </div>
 
-        <div class="co-researchers">
-          <img src="assets/img/adel_oulefki.jpeg" alt="Dr. Adel Oulefki">
+        <div class="co-researcher-card">
+          <img class="co-researcher-photo" src="assets/img/adel_oulefki.jpeg" alt="Dr. Adel Oulefki">
           <div class="researcher-info">
             <strong>Dr. Adel Oulefki</strong>
+            <div class="researcher-role">Co-Researcher</div>
           </div>
         </div>
 
-
+      </div>
 
     </div>
 
@@ -704,5 +709,3 @@
 
 </body>
 </html>
-
-
